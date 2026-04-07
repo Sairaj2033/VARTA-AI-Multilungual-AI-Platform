@@ -1,0 +1,116 @@
+ 1. Parliament Passes Data Protection Bill
+Category: Politics | Bias: Left
+Details:
+India’s new Digital Personal Data Protection (DPDP) Bill requires companies and government entities to seek explicit consent before collecting or processing personal data. It introduces the Data Protection Board of India, responsible for investigating violations and levying penalties. Critics argue that some government exemptions undermine the bill’s effectiveness, but digital rights groups still consider it a step forward.
+
+📰 2. Nationwide Mental Health Helpline Launched
+Category: Healthcare | Bias: Emotional
+Details:
+With suicide and stress-related issues on the rise, India launched Tele-MANAS, a 24/7 mental health helpline. Operating in 22+ languages and staffed by psychologists and psychiatrists, it has already handled over 3 million calls since its beta launch. The initiative was praised for bridging rural mental health gaps.
+
+📰 3. Government Approves Drone Corridors
+Category: Technology | Bias: Right
+Details:
+India cleared specific drone air routes for logistics, agriculture spraying, and vaccine delivery. The DGCA and MoCA will regulate these corridors. These are expected to revolutionize remote healthcare access but also raised questions about air safety and job losses in manual logistics.
+
+📰 4. RBI Pilots Digital Rupee Wallet
+Category: Finance | Bias: Right
+Details:
+The e₹-R wallet pilot supports offline transactions, tap-to-pay options, and banking access for those in network-poor areas. It offers an alternative to private digital currencies and may lower transaction costs. Privacy advocates have raised surveillance concerns.
+
+📰 5. Solar Startup Raises $100M
+Category: Technology | Bias: Emotional
+Details:
+EcoSun has raised funds to install solar rooftops across public buildings, starting with schools and health centers in low-income areas. It will also provide maintenance via a mobile app and offers students energy dashboards to learn about renewables.
+
+📰 6. Ayushman Bharat to Cover Cancer
+Category: Healthcare | Bias: Left
+Details:
+The scheme now covers free cancer screening and treatment at 1,000+ hospitals, including surgery and chemo. The government aims to cut early mortality rates from breast and oral cancer in rural India by 50% by 2030.
+
+📰 7. AI Ethics Centre in Chennai
+Category: Technology | Bias: Left
+Details:
+India’s first AI Ethics hub will audit public sector AI projects, publish bias reports, and train officials. Backed by IIT Madras and MIT, it aims to align AI development with privacy and social impact goals.
+
+📰 8. Quantum Satellite by 2026
+Category: Technology | Bias: Right
+Details:
+ISRO is working with DRDO to launch India’s first quantum encryption satellite, which could make military and government comms impossible to hack. This is part of India’s larger Quantum Mission with ₹6,000 crore in funding.
+
+📰 9. Fintech Sandbox Opens
+Category: Finance | Bias: Right
+Details:
+Fintech startups can test their platforms—e.g., AI-driven credit, P2P lending—under RBI supervision. This avoids licensing delays while keeping consumers protected. Global VC interest is rising in the sandbox ecosystem.
+
+📰 10. UPI Goes Live in Bhutan
+Category: Finance | Bias: Emotional
+Details:
+Indian travelers and Bhutanese merchants can now use UPI for instant cross-border payments. It symbolizes strong regional ties and simplifies commerce in areas with low card penetration.
+
+📰 11. Railways Wi-Fi Expansion
+Category: Tech | Bias: Emotional
+Details:
+Free public Wi‑Fi across 400+ Indian Railway stations aims to provide education and digital access to rural commuters. RailTel handles backend integration with Google, who provides analytics.
+
+📰 12. India in Paris Olympics Chess
+Category: Sports | Bias: Emotional
+Details:
+After decades of absence, India qualifies for chess at the Olympics, powered by teen prodigies like Praggnanandhaa and Vaishali. The team ranks top-4 globally in performance metrics.
+
+📰 13. PHCs Go Fully Digital
+Category: Healthcare | Bias: Left
+Details:
+All PHCs must adopt ABHA-linked Electronic Health Records by 2026. This includes QR-coded reports, teleconsultation support, and referral history. Experts warn smaller PHCs may lack tech capacity.
+
+📰 14. Bharat Startup Mela
+Category: Business | Bias: Emotional
+Details:
+An event in Lucknow will host 5,000+ startups, 50 VC firms, and government accelerators. It emphasizes non-metro innovation and includes a separate track for women founders and SC/ST entrepreneurs.
+
+📰 15. Kerala Women Win Asia Cup
+Category: Sports | Bias: Emotional
+Details:
+Led by Kerala’s Anju K. Thomas, India beat Japan in a dramatic 2-1 comeback. The match broke viewership records on DD Sports and led to a 30% increase in girl football enrollments in Kerala.
+
+🇮🇳 Hindi News (5)
+📰 16. महिला आरक्षण विधेयक पेश
+विस्तृत जानकारी:
+33% आरक्षण के लिए लाया गया विधेयक 2026 से प्रभावी होगा। इससे लोकसभा और राज्य विधानसभाओं में महिलाओं की भागीदारी बढ़ेगी। कुछ पार्टियों ने इसे चुनावी स्टंट बताया।
+
+📰 17. यूपी में मुफ्त स्वास्थ्य शिविर
+विस्तृत जानकारी:
+राज्य सरकार ने प्रत्येक जिले में हफ्ते में दो बार कैंसर, मधुमेह और टीबी जांच कैंप लगाए हैं। इसमें मुफ्त दवाएं, ECG, और अल्ट्रासाउंड सुविधाएं शामिल हैं।
+
+📰 18. कार्बन क्रेडिट एक्सचेंज शुरू
+विस्तृत जानकारी:
+यह एक्सचेंज इंडस्ट्रीज़ को स्वच्छ ऊर्जा खरीदने या उत्सर्जन घटाने के लिए वित्तीय लाभ देगा। इससे ग्रीन प्रोजेक्ट्स को पूंजी मिलेगी, पर कुछ विशेषज्ञों ने पारदर्शिता पर सवाल उठाए हैं।
+
+📰 19. मुंबई में EV चार्जिंग नेटवर्क
+विस्तृत जानकारी:
+BMC ने मॉल, बस स्टॉप और सरकारी कार्यालयों में 1,000 चार्जिंग स्टेशन की योजना बनाई है। उपयोगकर्ताओं को 50 रुपये प्रति चार्जिंग का मानक शुल्क देना होगा।
+
+📰 20. महिला हॉकी टीम की ऐतिहासिक जीत
+विस्तृत जानकारी:
+टीम ने एशिया कप में जापान को हराया, और अब पेरिस ओलंपिक्स की तैयारी कर रही है। सरकार ने खिलाड़ियों को ₹15 लाख इनाम देने की घोषणा की है।
+
+🇮🇳 Marathi News (5)
+📰 21. कृषी कायदे मंजूर
+तपशील:
+नवीन कायद्यांनुसार शेतकऱ्यांना खुल्या बाजारात विक्रीची मुभा मिळणार आहे. संघटनांनी याचे स्वागत केले, तर विरोधकांनी MSP सुनिश्चितीवर चिंता व्यक्त केली.
+
+📰 22. पुण्यात डेंगू तपासणी
+तपशील:
+महापालिकेच्या आरोग्य विभागाने प्रत्येक झोनमध्ये आठवड्यातून दोन वेळा मोफत तपासणी सुरू केली. नागरिकांना कीटकनाशके व आरोग्य किटही दिले जात आहे.
+
+📰 23. AI पाणी प्रणाली
+तपशील:
+स्मार्ट मीटर प्रणाली सुरू करण्यात आली असून, नागरिकांना SMS द्वारे वापर माहिती दिली जाईल. हे महाराष्ट्रातील पहिले पूर्णपणे AI-विनियंत्रित वॉटर ग्रिड ठरेल.
+
+📰 24. कोळीकर महोत्सव
+तपशील:
+पुण्यात होणाऱ्या उत्सवात 30+ कोळी कला सादर होतील. सांस्कृतिक मंत्रालयाने ₹25 लाख निधी मंजूर केला असून, पर्यटन वाढीस देखील मदत होईल.
+
+📰 25. मुलींसाठी क्रिकेट शिबिर
+तपशील:
+मुंबईत 500 मुलींसाठी क्रिकेट प्रशिक्षण सुरू आहे. यामध्ये BCCI प्रशिक्षकांद्वारे कोचिंग दिले जात असून, जिल्हा पातळीवरील स्पर्धेसाठी निवड प्रक्रिया सुरू आहे.

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Ask OpenRouter AI</title>
+  <style>
+  body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: #f5f7fa;
+    color: #222;
+    max-width: 700px;
+    margin: 3rem auto;
+    padding: 2rem;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+    border-radius: 12px;
+    background-color: #ffffff;
+  }
+
+  h2 {
+    text-align: center;
+    color: #2d3e50;
+    margin-bottom: 1.5rem;
+  }
+
+  .input-container {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+
+  input {
+    flex: 1;
+    padding: 0.75rem 1rem;
+    font-size: 1rem;
+    border: 2px solid #ccc;
+    border-radius: 8px;
+    transition: border 0.3s ease;
+    outline: none;
+  }
+
+  input:focus {
+    border-color: #4a90e2;
+  }
+
+  button {
+    background-color: #4a90e2;
+    color: white;
+    border: none;
+    padding: 0.75rem 1.25rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #357ab8;
+  }
+
+  #response {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: #eef2f7;
+    border-left: 4px solid #4a90e2;
+    border-radius: 8px;
+    white-space: pre-wrap;
+    min-height: 120px;
+    font-size: 1rem;
+    line-height: 1.6;
+  }
+</style>
+
+</head>
+<body>
+  <h2>Ask OpenRouter (ChatGPT/GPT-4 etc.)</h2>
+  <div>
+    <input type="text" id="userInput" placeholder="Type your question..." />
+    <button onclick="askAI()">Send</button>
+  </div>
+  <div id="response">Response will appear here...</div>
+
+  <script>
+    async function askAI() {
+      const API_KEY = "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"; // ✅ OpenRouter API key
+      const userPrompt = document.getElementById("userInput").value.trim();
+      const responseDiv = document.getElementById("response");
+
+      if (!userPrompt) {
+        alert("Please type a question.");
+        return;
+      }
+
+      responseDiv.textContent = "Loading...";
+
+      const url = "https://openrouter.ai/api/v1/chat/completions";
+
+      const requestData = {
+        model: "openai/gpt-3.5-turbo",  // You can also use "mistralai/mixtral-8x7b", "anthropic/claude-3-opus", etc.
+        messages: [
+          { role: "system", content: "You are a helpful assistant." },
+          { role: "user", content: userPrompt }
+        ]
+      };
+
+      try {
+        const res = await fetch(url, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${API_KEY}`,
+            "HTTP-Referer": "http://localhost", // Required by OpenRouter (set to your domain if deployed)
+            "X-Title": "My Demo App"            // Optional
+          },
+          body: JSON.stringify(requestData)
+        });
+
+        if (!res.ok) {
+          const errorText = await res.text();
+          throw new Error(`Error ${res.status}: ${res.statusText}\n${errorText}`);
+        }
+
+        const data = await res.json();
+        const output = data.choices?.[0]?.message?.content || "No response.";
+        responseDiv.textContent = output;
+
+      } catch (error) {
+        responseDiv.textContent = "Error: " + error.message;
+      }
+    }
+  </script>
+</body>
+</html>

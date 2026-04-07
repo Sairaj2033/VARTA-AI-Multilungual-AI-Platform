@@ -1,0 +1,36 @@
+[1G[0K⠙[1G[0K
+> rest-express@1.0.0 dev
+> NODE_ENV=development tsx server/index.ts
+
+[1G[0K⠙[1G[0KGEMINI_API_KEY not found in environment variables
+NEWS_API_KEY not found in environment variables
+GOOGLE_TRANSLATE_API_KEY not found in environment variables
+3:05:31 PM [express] serving on port 5000
+Initializing with sample news data...
+Initializing with updated sample data including 25 new articles...
+Successfully initialized 39 sample articles (including 25 new articles) with sample translations
+Generating 3 new articles using Gemini AI...
+Error generating article 1: Error: Gemini API key not configured
+    at AIService.generateNewsArticle [90m(/home/runner/workspace/[39mserver/services/aiService.ts:148:13[90m)[39m
+    at NewsService.generateNewsArticles [90m(/home/runner/workspace/[39mserver/services/newsService.ts:138:50[90m)[39m
+    at NewsService.generateAndRefresh [90m(/home/runner/workspace/[39mserver/services/newsService.ts:179:18[90m)[39m
+    at Timeout._onTimeout [90m(/home/runner/workspace/[39mserver/routes.ts:483:27[90m)[39m
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+Error generating article 2: Error: Gemini API key not configured
+    at AIService.generateNewsArticle [90m(/home/runner/workspace/[39mserver/services/aiService.ts:148:13[90m)[39m
+    at NewsService.generateNewsArticles [90m(/home/runner/workspace/[39mserver/services/newsService.ts:138:50[90m)[39m
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+    at async NewsService.generateAndRefresh [90m(/home/runner/workspace/[39mserver/services/newsService.ts:179:7[90m)[39m
+    at async Timeout._onTimeout [90m(/home/runner/workspace/[39mserver/routes.ts:483:9[90m)[39m
+Error generating article 3: Error: Gemini API key not configured
+    at AIService.generateNewsArticle [90m(/home/runner/workspace/[39mserver/services/aiService.ts:148:13[90m)[39m
+    at NewsService.generateNewsArticles [90m(/home/runner/workspace/[39mserver/services/newsService.ts:138:50[90m)[39m
+[90m    at process.processTicksAndRejections (node:internal/process/task_queues:95:5)[39m
+    at async NewsService.generateAndRefresh [90m(/home/runner/workspace/[39mserver/services/newsService.ts:179:7[90m)[39m
+    at async Timeout._onTimeout [90m(/home/runner/workspace/[39mserver/routes.ts:483:9[90m)[39m
+Browserslist: browsers data (caniuse-lite) is 10 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+4:25:17 PM [express] GET /api/stats 304 in 2ms :: {"total":39,"today":39,"translated":0,"byCategory"…
+4:25:17 PM [express] GET /api/languages 304 in 0ms :: [{"code":"en","name":"English","nativeName":"E…
+4:25:17 PM [express] GET /api/articles 200 in 1ms :: [{"title":"Parliament Passes Data Protection Bi…

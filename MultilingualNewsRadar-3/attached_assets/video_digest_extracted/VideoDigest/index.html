@@ -1,0 +1,794 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DrishtiSar - News Video Summarizer</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            color: white;
+        }
+
+        .header h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(45deg, #fff, #f0f0f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            font-weight: 300;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+
+        /* Upload Section */
+        .upload-panel {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            color: white;
+            transition: all 0.3s ease;
+        }
+
+        .upload-panel:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-5px);
+        }
+
+        .upload-zone {
+            border: 2px dashed rgba(255, 255, 255, 0.3);
+            border-radius: 16px;
+            padding: 60px 20px;
+            margin-bottom: 30px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-zone::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+
+        .upload-zone:hover::before {
+            opacity: 1;
+            animation: shimmer 1.5s ease-in-out infinite;
+        }
+
+        @keyframes shimmer {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .upload-zone.dragover {
+            border-color: #4CAF50;
+            background: rgba(76, 175, 80, 0.1);
+            transform: scale(1.02);
+        }
+
+        .upload-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .upload-text {
+            font-size: 1.3rem;
+            font-weight: 500;
+            margin-bottom: 20px;
+        }
+
+        .upload-btn {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            padding: 16px 32px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.3);
+        }
+
+        .upload-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(76, 175, 80, 0.4);
+        }
+
+        .file-input {
+            display: none;
+        }
+
+        /* Results Panel */
+        .results-panel {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 24px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+            backdrop-filter: blur(20px);
+            display: none;
+        }
+
+        .results-panel.show {
+            display: block;
+            animation: slideInRight 0.6s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        /* Processing Animation */
+        .processing-panel {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 24px;
+            padding: 40px;
+            color: white;
+            display: none;
+            text-align: center;
+        }
+
+        .processing-panel.show {
+            display: block;
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .processing-steps {
+            margin: 30px 0;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 20px;
+            margin: 15px 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .step.active {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            transform: scale(1.02);
+        }
+
+        .step.completed {
+            background: rgba(76, 175, 80, 0.3);
+        }
+
+        .step-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .step-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.2);
+            font-size: 1.2rem;
+        }
+
+        .step.active .step-icon {
+            background: rgba(255, 255, 255, 0.3);
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        .step.completed .step-icon {
+            background: #4CAF50;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+
+        .step-text {
+            font-weight: 500;
+        }
+
+        .step-time {
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* Progress Bar */
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4CAF50, #45a049);
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 3px;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            margin-bottom: 30px;
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #333;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .summary-content {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+            line-height: 1.7;
+            color: #555;
+            border-left: 4px solid #4CAF50;
+            font-size: 1rem;
+        }
+
+        /* Q&A Section */
+        .qa-section {
+            background: #f8f9fa;
+            border-radius: 12px;
+            padding: 25px;
+        }
+
+        .question-input {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 8px;
+            font-size: 1rem;
+            margin-bottom: 15px;
+            resize: vertical;
+            min-height: 80px;
+            font-family: inherit;
+            transition: border-color 0.3s ease;
+        }
+
+        .question-input:focus {
+            outline: none;
+            border-color: #4CAF50;
+        }
+
+        .ask-btn {
+            background: linear-gradient(45deg, #2196F3, #1976D2);
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .ask-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(33, 150, 243, 0.3);
+        }
+
+        .ask-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .answer-container {
+            margin-top: 20px;
+            display: none;
+            animation: slideDown 0.3s ease-out;
+        }
+
+        .answer-container.show {
+            display: block;
+        }
+
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .answer-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            border-left: 4px solid #2196F3;
+            line-height: 1.6;
+            color: #555;
+        }
+
+        /* Action Buttons */
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            justify-content: center;
+        }
+
+        .btn-secondary {
+            background: #6c757d;
+            color: white;
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-secondary:hover {
+            background: #5a6268;
+            transform: translateY(-2px);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+
+            .header h1 {
+                font-size: 2.5rem;
+            }
+
+            .main-content {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .upload-panel,
+            .results-panel,
+            .processing-panel {
+                padding: 25px;
+            }
+
+            .upload-zone {
+                padding: 40px 15px;
+            }
+
+            .upload-icon {
+                font-size: 3rem;
+            }
+        }
+
+        /* Video Preview */
+        .video-preview {
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        .video-preview video {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .video-info {
+            background: #e3f2fd;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .video-info strong {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>DrishtiSar</h1>
+            <p>Transform news videos into intelligent summaries with AI-powered analysis</p>
+        </div>
+
+        <div class="main-content">
+            <!-- Upload Panel -->
+            <div class="upload-panel" id="uploadPanel">
+                <div class="upload-zone" id="uploadZone">
+                    <div class="upload-icon">📺</div>
+                    <div class="upload-text">Drop your news video here or click to browse</div>
+                    <button class="upload-btn" onclick="document.getElementById('fileInput').click()">
+                        Choose News Video
+                    </button>
+                    <input type="file" class="file-input" id="fileInput" accept="video/*">
+                </div>
+                
+                <div class="video-info">
+                    <strong>Supported formats:</strong> MP4, WebM, AVI, MOV, MKV<br>
+                    <strong>Max size:</strong> 100MB | <strong>Max duration:</strong> 30 minutes<br>
+                    <strong>Best for:</strong> News broadcasts, interviews, press conferences
+                </div>
+            </div>
+
+            <!-- Processing Panel -->
+            <div class="processing-panel" id="processingPanel">
+                <h2>Processing News Video</h2>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+                
+                <div class="processing-steps">
+                    <div class="step" id="step1">
+                        <div class="step-info">
+                            <div class="step-icon">📺</div>
+                            <div class="step-text">Analyzing news video</div>
+                        </div>
+                        <div class="step-time">2s</div>
+                    </div>
+                    <div class="step" id="step2">
+                        <div class="step-info">
+                            <div class="step-icon">🎙️</div>
+                            <div class="step-text">Extracting audio track</div>
+                        </div>
+                        <div class="step-time">3s</div>
+                    </div>
+                    <div class="step" id="step3">
+                        <div class="step-info">
+                            <div class="step-icon">📝</div>
+                            <div class="step-text">Transcribing news content</div>
+                        </div>
+                        <div class="step-time">4s</div>
+                    </div>
+                    <div class="step" id="step4">
+                        <div class="step-info">
+                            <div class="step-icon">🤖</div>
+                            <div class="step-text">Generating news summary</div>
+                        </div>
+                        <div class="step-time">3s</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Results Panel -->
+            <div class="results-panel" id="resultsPanel">
+                <div class="video-preview" id="videoPreview"></div>
+                
+                <div class="summary-section">
+                    <div class="section-title">
+                        <span>📰</span>
+                        News Summary
+                    </div>
+                    <div class="summary-content" id="summaryContent"></div>
+                </div>
+
+                <div class="qa-section">
+                    <div class="section-title">
+                        <span>❓</span>
+                        Ask About the News
+                    </div>
+                    <textarea class="question-input" id="questionInput" 
+                              placeholder="Ask questions about the news content, key facts, or analysis..."></textarea>
+                    <button class="ask-btn" id="askBtn">Ask Question</button>
+                    <div class="answer-container" id="answerContainer">
+                        <div class="answer-content" id="answerContent"></div>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="btn-secondary" onclick="resetApp()">Analyze Another News Video</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global variables
+        let currentVideoFile = null;
+        let currentSummary = '';
+        let isProcessing = false;
+
+        // DOM Elements
+        const uploadPanel = document.getElementById('uploadPanel');
+        const processingPanel = document.getElementById('processingPanel');
+        const resultsPanel = document.getElementById('resultsPanel');
+        const uploadZone = document.getElementById('uploadZone');
+        const fileInput = document.getElementById('fileInput');
+        const progressFill = document.getElementById('progressFill');
+
+        // Sample news summaries for different types of content
+        const sampleSummaries = [
+            "Breaking News: The government announced a new economic policy aimed at boosting infrastructure development. The Finance Minister outlined key investments in transportation, renewable energy, and digital infrastructure. Expected to create over 200,000 jobs in the next two years, the policy includes tax incentives for green technology companies and increased funding for rural connectivity projects. Opposition parties have raised concerns about budget allocation and implementation timelines.",
+            
+            "International Update: Global climate summit concludes with landmark agreements on carbon emission reduction. Over 150 countries committed to achieving net-zero emissions by 2050. Key decisions include a $100 billion fund for developing nations and stricter regulations on fossil fuel industries. Environmental groups praised the agreements while expressing concerns about enforcement mechanisms. The summit addressed urgent climate challenges including rising sea levels and extreme weather events.",
+            
+            "Technology News: Major tech companies face increased regulatory scrutiny over data privacy practices. New legislation proposes stricter guidelines for user data collection and sharing. Industry leaders argue the regulations could impact innovation and competitiveness. Consumer advocacy groups support the measures, citing growing concerns about digital privacy. The proposed laws include hefty fines for non-compliance and mandatory user consent protocols.",
+            
+            "Health Update: Medical researchers announce breakthrough in cancer treatment using AI-powered drug discovery. Clinical trials show promising results for targeted therapy approaches. The new treatment demonstrates higher success rates with fewer side effects compared to traditional methods. Healthcare experts emphasize the potential to revolutionize oncology care. Further studies are planned to validate long-term effectiveness across different cancer types.",
+            
+            "Sports News: International cricket tournament concludes with record-breaking viewership and attendance figures. The championship featured remarkable performances from emerging players and established stars. Key highlights include several world records and dramatic match finishes. Economic impact analysis shows significant boost to local tourism and hospitality sectors. Organizers announce expansion plans for future tournaments based on the overwhelming success."
+        ];
+
+        // News Q&A responses
+        const sampleQAResponses = [
+            "According to the news report, the key stakeholders involved include government officials, industry leaders, and citizen advocacy groups. Each party has expressed different perspectives on the implementation timeline and expected outcomes.",
+            
+            "The news coverage highlights that the main impact areas include economic growth, environmental sustainability, and social welfare. Expert analysts suggest monitoring these sectors closely for measurable changes over the coming months.",
+            
+            "Based on the reported facts, the financial implications involve both immediate costs and long-term benefits. Budget allocation details were provided, though some opposition voices have questioned the funding sources and sustainability.",
+            
+            "The news report mentions that public reaction has been mixed, with supporters praising the progressive approach while critics raise concerns about practical implementation. Several polls indicate divided public opinion on the matter.",
+            
+            "According to the coverage, the timeline for implementation spans multiple phases over the next 18-24 months. Key milestones and checkpoints have been established to track progress and make necessary adjustments."
+        ];
+
+        // Initialize event listeners
+        document.addEventListener('DOMContentLoaded', function() {
+            setupEventListeners();
+        });
+
+        function setupEventListeners() {
+            // File input change
+            fileInput.addEventListener('change', handleFileSelect);
+
+            // Drag and drop
+            uploadZone.addEventListener('dragover', handleDragOver);
+            uploadZone.addEventListener('dragleave', handleDragLeave);
+            uploadZone.addEventListener('drop', handleDrop);
+            uploadZone.addEventListener('click', () => fileInput.click());
+
+            // Q&A functionality
+            document.getElementById('askBtn').addEventListener('click', handleQuestionSubmit);
+            document.getElementById('questionInput').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                    e.preventDefault();
+                    handleQuestionSubmit();
+                }
+            });
+        }
+
+        function handleDragOver(e) {
+            e.preventDefault();
+            uploadZone.classList.add('dragover');
+        }
+
+        function handleDragLeave(e) {
+            e.preventDefault();
+            uploadZone.classList.remove('dragover');
+        }
+
+        function handleDrop(e) {
+            e.preventDefault();
+            uploadZone.classList.remove('dragover');
+            
+            const files = e.dataTransfer.files;
+            if (files.length > 0) {
+                processVideoFile(files[0]);
+            }
+        }
+
+        function handleFileSelect(e) {
+            const file = e.target.files[0];
+            if (file) {
+                processVideoFile(file);
+            }
+        }
+
+        async function processVideoFile(file) {
+            if (isProcessing) return;
+            
+            // Validate file type
+            if (!file.type.startsWith('video/')) {
+                alert('Please select a valid video file.');
+                return;
+            }
+
+            currentVideoFile = file;
+            isProcessing = true;
+
+            // Show processing panel
+            uploadPanel.style.display = 'none';
+            processingPanel.classList.add('show');
+            resultsPanel.classList.remove('show');
+
+            // Simulate processing steps
+            await simulateProcessing();
+
+            // Show results
+            displayResults();
+        }
+
+        async function simulateProcessing() {
+            const steps = ['step1', 'step2', 'step3', 'step4'];
+            const durations = [2000, 3000, 4000, 3000]; // Duration for each step
+
+            for (let i = 0; i < steps.length; i++) {
+                // Mark current step as active
+                document.getElementById(steps[i]).classList.add('active');
+                
+                // Update progress bar
+                const progress = ((i + 1) / steps.length) * 100;
+                progressFill.style.width = progress + '%';
+
+                // Wait for step duration
+                await new Promise(resolve => setTimeout(resolve, durations[i]));
+
+                // Mark step as completed
+                document.getElementById(steps[i]).classList.remove('active');
+                document.getElementById(steps[i]).classList.add('completed');
+                document.getElementById(steps[i]).querySelector('.step-icon').textContent = '✓';
+            }
+        }
+
+        function displayResults() {
+            // Hide processing panel
+            processingPanel.classList.remove('show');
+            
+            // Show video preview
+            const videoPreview = document.getElementById('videoPreview');
+            const video = document.createElement('video');
+            video.controls = true;
+            video.style.maxWidth = '100%';
+            video.style.height = '200px';
+            video.src = URL.createObjectURL(currentVideoFile);
+            videoPreview.innerHTML = '';
+            videoPreview.appendChild(video);
+
+            // Generate random summary
+            const randomSummary = sampleSummaries[Math.floor(Math.random() * sampleSummaries.length)];
+            currentSummary = randomSummary;
+            document.getElementById('summaryContent').textContent = randomSummary;
+
+            // Show results panel
+            resultsPanel.classList.add('show');
+            
+            isProcessing = false;
+        }
+
+        function handleQuestionSubmit() {
+            const questionInput = document.getElementById('questionInput');
+            const askBtn = document.getElementById('askBtn');
+            const answerContainer = document.getElementById('answerContainer');
+            const answerContent = document.getElementById('answerContent');
+
+            const question = questionInput.value.trim();
+            if (!question) {
+                alert('Please enter a question.');
+                return;
+            }
+
+            // Disable button and show loading
+            askBtn.disabled = true;
+            askBtn.textContent = 'Thinking...';
+            answerContainer.classList.remove('show');
+
+            // Simulate AI thinking time
+            setTimeout(() => {
+                // Generate random response
+                const randomResponse = sampleQAResponses[Math.floor(Math.random() * sampleQAResponses.length)];
+                answerContent.textContent = randomResponse;
+                answerContainer.classList.add('show');
+                
+                // Clear question and re-enable button
+                questionInput.value = '';
+                askBtn.disabled = false;
+                askBtn.textContent = 'Ask Question';
+            }, 2000);
+        }
+
+        function resetApp() {
+            // Reset all variables
+            currentVideoFile = null;
+            currentSummary = '';
+            isProcessing = false;
+
+            // Reset file input
+            fileInput.value = '';
+
+            // Reset progress
+            progressFill.style.width = '0%';
+
+            // Reset steps
+            const steps = document.querySelectorAll('.step');
+            steps.forEach(step => {
+                step.classList.remove('active', 'completed');
+                const icon = step.querySelector('.step-icon');
+                const originalIcons = ['📺', '🎙️', '📝', '🤖'];
+                const stepIndex = Array.from(steps).indexOf(step);
+                icon.textContent = originalIcons[stepIndex];
+            });
+
+            // Clear Q&A
+            document.getElementById('questionInput').value = '';
+            document.getElementById('answerContainer').classList.remove('show');
+
+            // Show upload panel
+            uploadPanel.style.display = 'block';
+            processingPanel.classList.remove('show');
+            resultsPanel.classList.remove('show');
+        }
+    </script>
+</body>
+</html>
