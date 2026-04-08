@@ -202,6 +202,34 @@ Requirements:
       throw new Error(`Failed to generate news article: ${error}`);
     }
   }
+
+  async chatWithArticle(userPrompt: string, articleText?: string): Promise<string> {
+    if (!process.env.GEMINI_API_KEY) {
+      throw new Error('Gemini API key not configured');
+    }
+
+    try {
+      const systemPrompt = "You are Varta.AI, a specialized assistant for news analysis and bias detection. You help users analyze news articles for bias, summarize content, detect political leanings, identify emotional language, and provide detailed analysis. Be thorough, objective, and provide specific examples when analyzing articles.";
+
+      let promptText = userPrompt;
+      if (articleText && articleText.trim()) {
+        promptText = `Please analyze this news article:\n\n${articleText}\n\n---\n\nUser question: ${userPrompt}`;
+      }
+
+      const response = await this.gemini.models.generateContent({
+        model: "gemini-2.5-flash",
+        config: {
+          systemInstruction: systemPrompt,
+        },
+        contents: promptText
+      });
+
+      return response.text || "I apologize, but I couldn't generate a response. Please try again.";
+    } catch (error) {
+      console.error('Chat generation error:', error);
+      throw new Error(`Failed to generate chat response: ${error}`);
+    }
+  }
 }
 
 export const aiService = new AIService();

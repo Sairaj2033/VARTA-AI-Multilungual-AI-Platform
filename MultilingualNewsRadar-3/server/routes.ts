@@ -4,6 +4,7 @@ import { storage } from "./storage";
 import { newsService } from "./services/newsService";
 import { translationService } from "./services/translationService";
 import { recommendationService } from "./services/recommendationService";
+import { aiService } from "./services/aiService";
 import { initializeSampleData } from "./sampleData";
 import { FilterSchema, loginSchema, signupSchema, insertUserInteractionSchema, insertUserPreferencesSchema } from "@shared/schema";
 import { z } from "zod";
@@ -229,6 +230,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error searching articles:', error);
       res.status(500).json({ message: "Failed to search articles" });
+    }
+  });
+
+  // Chat with article (Ask AI)
+  app.post("/api/chat", async (req, res) => {
+    try {
+      const { userPrompt, articleText } = req.body;
+      
+      if (!userPrompt) {
+        return res.status(400).json({ message: "User prompt is required" });
+      }
+      
+      const response = await aiService.chatWithArticle(userPrompt, articleText);
+      res.json({ response });
+    } catch (error) {
+      console.error('Error in chat API:', error);
+      res.status(500).json({ message: "Failed to generate AI response" });
     }
   });
 

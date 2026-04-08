@@ -11,7 +11,6 @@ import { useToast } from "@/hooks/use-toast";
 import { useTheme } from "@/contexts/theme-context";
 import { useLanguage } from "@/contexts/language-context";
 import { apiRequest } from "@/lib/queryClient";
-import { openRouterService } from "@/services/openrouterService";
 import type { Message } from "@shared/schema";
 
 // Generate a unique session ID for this chat session
@@ -69,8 +68,14 @@ export default function ChatPage() {
     setMessages(prev => [...prev, userMessage]);
     
     try {
-      // Get real AI response from OpenRouter
-      const aiResponseText = await openRouterService.sendMessage(text, articleText);
+      // Get real AI response using backend API
+      const response = await apiRequest("POST", "/api/chat", {
+        userPrompt: text,
+        articleText
+      });
+      
+      const data = await response.json();
+      const aiResponseText = data.response;
       
       const aiResponse: Message = {
         id: (Date.now() + 1).toString(),

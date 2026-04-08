@@ -105,6 +105,13 @@ export interface Message {
   timestamp: Date;
 }
 
+// Chat Session type
+export interface ChatSession {
+  id: string;
+  title?: string;
+  timestamp: Date | string;
+}
+
 // Blog types
 export const blogs = pgTable("blogs", {
   id: serial("id").primaryKey(),
