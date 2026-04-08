@@ -5,6 +5,7 @@ import { newsService } from "./services/newsService";
 import { translationService } from "./services/translationService";
 import { recommendationService } from "./services/recommendationService";
 import { aiService } from "./services/aiService";
+import { openrouterService } from "./services/openrouterService";
 import { initializeSampleData } from "./sampleData";
 import { FilterSchema, loginSchema, signupSchema, insertUserInteractionSchema, insertUserPreferencesSchema } from "@shared/schema";
 import { z } from "zod";
@@ -242,7 +243,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "User prompt is required" });
       }
       
-      const response = await aiService.chatWithArticle(userPrompt, articleText);
+      const response = await openrouterService.chatWithArticle(userPrompt, articleText);
       res.json({ response });
     } catch (error) {
       console.error('Error in chat API:', error);
