@@ -14,6 +14,13 @@ interface OpenRouterResponse {
 class OpenRouterService {
   private readonly API_URL = "https://openrouter.ai/api/v1/chat/completions";
   private readonly MODEL = "openai/gpt-4o-mini";
+  
+  constructor() {
+    if (!process.env.OPENROUTER_API_KEY) {
+      console.warn('OPENROUTER_API_KEY not found in environment variables');
+    }
+  }
+
 
   async chatWithArticle(userPrompt: string, articleText?: string): Promise<string> {
     const apiKey = process.env.OPENROUTER_API_KEY;
