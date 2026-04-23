@@ -13,7 +13,7 @@ interface OpenRouterResponse {
 
 class OpenRouterService {
   private readonly API_URL = "https://openrouter.ai/api/v1/chat/completions";
-  private readonly MODEL = "openai/gpt-3.5-turbo";
+  private readonly MODEL = "openai/gpt-4o-mini";
 
   async chatWithArticle(userPrompt: string, articleText?: string): Promise<string> {
     const apiKey = process.env.OPENROUTER_API_KEY;

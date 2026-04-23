@@ -44,7 +44,7 @@ Content: ${content.substring(0, 2000)}
 `;
 
       const response = await this.gemini.models.generateContent({
-        model: "gemini-2.5-flash",
+        model: "gemini-1.5-flash",
         config: {
           systemInstruction: systemPrompt,
           responseMimeType: "application/json",
@@ -168,7 +168,7 @@ Requirements:
 - Length should be 300-500 words`;
 
       const response = await this.gemini.models.generateContent({
-        model: "gemini-2.5-flash",
+        model: "gemini-1.5-flash",
         config: {
           systemInstruction: systemPrompt,
           responseMimeType: "application/json",
