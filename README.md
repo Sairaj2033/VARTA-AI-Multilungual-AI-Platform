@@ -165,11 +165,7 @@ Translated News Display
 
 ---
 
-## 📸 Preview
 
-> Add screenshots or GIFs showcasing the application's interface here.
-
----
 
 ## 🤝 Contributing
 
